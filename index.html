@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolha Agora Seu Vídeo Preferido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffe6f2;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #ff66b2;
+        }
+        h2 {
+            color: #ff6699;
+        }
+        form, table {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="submit"] {
+            background-color: #ff66b2;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #ff3399;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #ff66b2;
+            color: white;
+        }
+    </style>
+    <script>
+        // Simulando os votos em tempo real
+        let votos = {
+            "Peralta": 0,
+            "Lord": 0,
+            "Igarata II": 0,
+            "Yatch Pantaneiro": 0,
+            "Estrela Plaza": 0,
+            "Barão do Lago": 0,
+            "Kalypso": 0,
+            "Millenium": 0,
+            "Paola I": 0,
+            "Veneza": 0,
+            "Almirante": 0,
+            "Vip": 0,
+            "Coração de pescador": 0,
+            "Akaia": 0,
+            "Celebridade": 0,
+            "Paola II": 0,
+            "Magnata": 0,
+            "Comodoro": 0,
+            "Kayama": 0,
+            "Netuno": 0
+        };
+
+        function atualizarVotos(video) {
+            if (document.cookie.includes("votou=true")) {
+                alert("Você já votou!");
+                return;
+            }
+            votos[video]++;
+            document.cookie = "votou=true; max-age=" + 60*60*24; // Cookie válido por 1 dia
+            atualizarTabela();
+            alert("Voto computado com sucesso!");
+        }
+
+        function atualizarTabela() {
+            const tabela = document.getElementById("tabela-votos");
+            tabela.innerHTML = "";
+            for (const [video, voto] of Object.entries(votos)) {
+                const row = tabela.insertRow();
+                const cell1 = row.insertCell(0);
+                const cell2 = row.insertCell(1);
+                cell1.innerText = video;
+                cell2.innerText = voto;
+            }
+        }
+
+        window.onload = function() {
+            atualizarTabela();
+        }
+    </script>
+</head>
+<body>
+    <h1>Escolha Agora Seu Vídeo Preferido</h1>
+    <h2>As 5 mais votadas serão as vencedoras da nossa promoção.</h2>
+    <form onsubmit="event.preventDefault(); atualizarVotos(document.querySelector('input[name=video]:checked').value);">
+        <label><input type="radio" name="video" value="Peralta"> Peralta</label>
+        <label><input type="radio" name="video" value="Lord"> Lord</label>
+        <label><input type="radio" name="video" value="Igarata II"> Igarata II</label>
+        <label><input type="radio" name="video" value="Yatch Pantaneiro"> Yatch Pantaneiro</label>
+        <label><input type="radio" name="video" value="Estrela Plaza"> Estrela Plaza</label>
+        <label><input type="radio" name="video" value="Barão do Lago"> Barão do Lago</label>
+        <label><input type="radio" name="video" value="Kalypso"> Kalypso</label>
+        <label><input type="radio" name="video" value="Millenium"> Millenium</label>
+        <label><input type="radio" name="video" value="Paola I"> Paola I</label>
+        <label><input type="radio" name="video" value="Veneza"> Veneza</label>
+        <label><input type="radio" name="video" value="Almirante"> Almirante</label>
+        <label><input type="radio" name="video" value="Vip"> Vip</label>
+        <label><input type="radio" name="video" value="Coração de pescador"> Coração de pescador</label>
+        <label><input type="radio" name="video" value="Akaia"> Akaia</label>
+        <label><input type="radio" name="video" value="Celebridade"> Celebridade</label>
+        <label><input type="radio" name="video" value="Paola II"> Paola II</label>
+        <label><input type="radio" name="video" value="Magnata"> Magnata</label>
+        <label><input type="radio" name="video" value="Comodoro"> Comodoro</label>
+        <label><input type="radio" name="video" value="Kayama"> Kayama</label>
+        <label><input type="radio" name="video" value="Netuno"> Netuno</label>
+        <input type="submit" value="Votar">
+    </form>
+    <h2>Total de Votos em Tempo Real</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Participante</th>
+                <th>Total de Votos</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-votos">
+        </tbody>
+    </table>
+</body>
+</html>
